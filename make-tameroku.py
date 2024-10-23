@@ -15,7 +15,7 @@ else:
     EOL = '\n'
 
 TOFILE = open(TONAME, 'w')
-FROMFILE = open(FROMNAME, 'rt')
+FROMFILE = open(FROMNAME, 'rt', encoding="utf8")
 
 def send_command(command):
     TOFILE.write(command + EOL)
@@ -32,8 +32,10 @@ def get_response():
     return result
 
 def do_command(command):
+    print(command)
     send_command(command)
     response = get_response()
+    print(response)
     return response
 
 ########################
@@ -42,6 +44,7 @@ if len(sys.argv) != 4:
     print("invalid argument")
     sys.exit()
 
+#in_folder = "c:\\work\\inajob-podcast\\20240903" # sys.argv[1]
 in_folder = sys.argv[1]
 change_sound = sys.argv[2]
 bgm_sound = sys.argv[3]
@@ -122,7 +125,7 @@ for x in range(len(files)-2):
     do_command('CursNextClipBoundary:') 
 # 最後Clipの先頭から3秒前にBGMを貼り付け
 do_command('SelectTracks: Track=2 TrackCount=1')
-do_command('SelectTime: Start=-3.0 End=-3.0 RelativeTo=SelectionStart')
+do_command('SelectTime: Start=1.0 End=1.0 RelativeTo=SelectionStart')
 do_command('Paste:')
 
 # 最後のBGMをClipに合わせて切り取る
